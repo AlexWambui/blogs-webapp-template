@@ -1,8 +1,5 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <main>
-    <h1>Home Page</h1>
-  </main>
+  <div class="about">
+    <h1>This is the home page</h1>
+  </div>
 </template>
