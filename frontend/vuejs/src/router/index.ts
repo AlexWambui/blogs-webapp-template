@@ -30,6 +30,16 @@ const router = createRouter({
       name: 'Dashboard',
       component: DashboardView,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('@/views/pages/errors/404.vue'),
+    },
+    {
+      path: '/500',
+      name: '500',
+      component: () => import('@/views/pages/errors/500.vue'),
     }
   ],
 });

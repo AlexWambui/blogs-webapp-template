@@ -62,13 +62,19 @@ export const useAuthStore = defineStore("auth", () => {
         }
     };
 
+    const cleanState = () => {
+        user.value = null;
+        isLoggedIn.value = false;
+    };
+
     return {
         user,
         isLoggedIn,
         register,
         login,
         getUser,
-        logout
+        logout,
+        cleanState,
     };
     }, {
         persist: {

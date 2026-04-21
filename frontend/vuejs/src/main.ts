@@ -1,8 +1,10 @@
 import './assets/main.css'
+import 'vue-toast-notification/dist/theme-bootstrap.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
+import ToastPlugin from 'vue-toast-notification'
 
 import App from './App.vue'
 import router from './router'
@@ -16,5 +18,6 @@ pinia.use(piniaPluginPersistedState)
 app.use(pinia)
 app.use(router)
 app.use(plugin, defaultConfig(config))
+app.use(ToastPlugin)
 
 app.mount('#app');
