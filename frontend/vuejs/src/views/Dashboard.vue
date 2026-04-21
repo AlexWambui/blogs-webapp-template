@@ -1,34 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axiosInstance from '@/lib/axios';
+import router from '@/router';
+import type { User } from '@/types';
 
-const user = ref({
-    name: '',
-    email: ''
-});
+const user = ref<User | null>(null);
 
 const getUser = async () => {
     try {
         const response = await axiosInstance.get("/user");
         user.value = response.data;
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
+        if (error.response?.status  === 401) {
+            router.push('/login');
+        }
     }
 };
 
 const logout = async () => {
     try {
         const response = await axiosInstance.post("/logout");
-        user.value = {
-            name: '',
-            email: ''
-        };
+        user.value = null;
+        router.push('/login');
     } catch (error) {
         console.error(error);
     }
 };
 
-getUser();
+onMounted(() => {
+    getUser();
+});
 </script>
 
 <template>

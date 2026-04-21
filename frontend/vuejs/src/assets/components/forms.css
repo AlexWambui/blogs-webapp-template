@@ -1,31 +1,53 @@
 .form {
-    @apply p-4 lg:w-[500px] lg:mx-auto;
+    @apply p-4;
 
     .header {
-        @apply border-b border-gray-700 mb-4 p-4;
+        @apply border-b border-(--faint-border-light) mb-4 py-4;
 
         h1 {
-            @apply font-semibold text-center text-xl;
+            @apply font-semibold text-xl;
         }
     }
 
-    .inputs-group {
-        @apply mb-4;
+    form {
+        .inputs-group {
+            @apply mb-4;
 
-        label {
-            @apply text-gray-400 mb-[1px];
+            label {
+                @apply text-(--faint-text-light);
+            }
+
+            input {
+                @apply text-(--text-color-dark) w-full border border-(--faint-border-light) py-1 px-4 rounded-[4px];
+            }
         }
 
-        input {
-            @apply w-full border border-gray-700 rounded-[4px] py-1 px-2;
-        }
-
-        .form-input-error {
-            @apply text-sm text-red-600;
+        button {
+            @apply py-1 px-4 bg-(--bg-color-light) text-(--text-color-light) tracking-wider font-medium rounded-[4px];
         }
     }
+}
 
-    button {
-        @apply bg-gray-100 text-gray-900 rounded-[4px] py-2 px-4 font-medium tracking-wide;
+.user_login_form,
+.user_registration_form {
+    @apply lg:w-[500px] lg:mx-auto;
+
+    .header {
+        h1 {
+            @apply text-center;
+        }
+    }
+}
+
+form {
+    .formkit-messages {
+        @apply mt-1;
+        .formkit-message {
+            @apply text-sm;
+
+            &[data-message-type="error"] {
+                @apply text-red-600;
+            }
+        }
     }
 }
