@@ -11,8 +11,8 @@ import config from '../formkit.config.ts'
 
 const app = createApp(App)
 
-app.use(createPinia())
 app.use(router)
+app.use(createPinia())
 app.use(plugin, defaultConfig(config))
 
 app.mount('#app')
