@@ -28,7 +28,6 @@ export const useAuthStore = defineStore("auth", () => {
 
         try {
             await axiosInstance.post('/login', payload);
-            getUser();
             router.push('/dashboard');
         } catch (e) {
             if (e instanceof AxiosError && e.response?.status === 422) {
@@ -38,15 +37,12 @@ export const useAuthStore = defineStore("auth", () => {
     };
 
     const getUser = async () => {
-        console.log('getUser called');
         try {
             const response = await axiosInstance.get("/user");
-            console.log('getUser response:', response.data);
             user.value = response.data;
             isLoggedIn.value = true;
         } catch (error: any) {
             console.error(error);
-            console.error('getUser error:', error);
             if (error.response?.status  === 401) {
                 router.push('/login');
             }
