@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use Exception;
 use App\Models\Blogs\Blog;
 use App\Models\User;
 use App\Http\Resources\BlogResource;
@@ -21,7 +22,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = $this->user()->blogs()->latest()->paginate(2);
+        $blogs = $this->user()->blogs()->latest()->paginate(5);
 
         return BlogResource::collection($blogs);
     }
@@ -76,6 +77,18 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        try {
+            $blog->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Blog deleted successfully'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to delete blog'
+            ], 500);
+        }
     }
 }

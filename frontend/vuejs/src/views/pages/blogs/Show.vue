@@ -3,34 +3,22 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import axiosInstance from '@/lib/axios';
 import type { Blog } from '@/types';
+import { useBlogStore } from '@/store/blog';
 
 const route = useRoute();
-const blog = ref<Blog | null>(null);
-
-const getBlog = async (slug: string) => {
-    try {
-        const { data } = await axiosInstance.get(`/blogs/${slug}`);
-        blog.value = data.data;
-    } catch (e) {
-        console.error(e);
-    }
-};
+const blogStore = useBlogStore();
 
 watch (
     () => route.params.slug, 
-    (slug) => {
-        if (slug) {
-            getBlog(String(slug));
-        }
-    }, 
+    (slug) => blogStore.getBlog(String(slug)), 
     {immediate: true}
 );
 </script>
 
 <template>
-    <h1>{{ blog?.title }}</h1>
-    <span>Created: {{ blog?.created_at }}</span>
+    <h1>{{ blogStore.blog?.title }}</h1>
+    <span>Created: {{ blogStore.blog?.created_at }}</span>
     <div class="body">
-        <p>{{ blog?.body }}</p>
+        <p>{{ blogStore.blog?.body }}</p>
     </div>
 </template>

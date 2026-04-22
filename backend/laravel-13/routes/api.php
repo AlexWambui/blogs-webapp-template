@@ -15,7 +15,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
     Route::put('/blogs/{blog:slug}', [BlogController::class, 'update']);
     Route::patch('/blogs/{blog:slug}', [BlogController::class, 'update']);
-    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy']);
+    Route::delete('/blogs/{blog:slug}', [BlogController::class, 'destroy']);
 });
 
 Route::get('users', function () {

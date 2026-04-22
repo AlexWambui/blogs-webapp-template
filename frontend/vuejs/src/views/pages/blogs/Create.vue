@@ -1,25 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import type { FormKitNode } from '@formkit/core';
-import { AxiosError } from 'axios';
-import axiosInstance from '@/lib/axios';
-import router from '@/router';
+import { useBlogStore } from '@/store/blog';
 
-type BlogForm = {
-    title: string;
-    body: string;
-}
-
-const createBlog = async (payload: BlogForm, node?: FormKitNode) => {
-    try {
-        await axiosInstance.post('/blogs', payload);
-        router.push('/blogs');
-    } catch (e) {
-        if (e instanceof AxiosError && e.response?.status === 422) {
-            node?.setErrors([], e.response.data.errors);
-        }
-    }
-}
+const { createBlog } = useBlogStore();
 </script>
 
 <template>

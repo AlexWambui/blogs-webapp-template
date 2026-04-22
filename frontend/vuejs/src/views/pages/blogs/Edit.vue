@@ -1,62 +1,38 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useRoute } from 'vue-router';
 import type { FormKitNode } from '@formkit/core';
-import { AxiosError } from 'axios';
-import axiosInstance from '@/lib/axios';
-import type { Blog } from '@/types';
-import router from '@/router';
+import { useBlogStore } from '@/store/blog';
+import type { BlogForm } from '@/types';
 
 const route = useRoute();
-const blog = ref<Blog | null>(null);
+const blogStore = useBlogStore();
 
-const getBlog = async (slug: string) => {
-    try {
-        const { data } = await axiosInstance.get(`/blogs/${slug}`);
-        blog.value = data.data;
-    } catch (e) {
-        console.error(e);
-    }
-};
-
-const updateBlog = async (payload: Blog, node?: FormKitNode) => {
-    if (blog.value) {
-        try {
-            await axiosInstance.put(`/blogs/${blog.value?.slug}`, payload);
-            router.push('/blogs');
-        } catch (e) {
-            if (e instanceof AxiosError && e.response?.status === 422) {
-                node?.setErrors([], e.response?.data.errors);
-            }
-        }
-    }
-};
+const handleUpdate = (payload: BlogForm, node?: FormKitNode) => {
+    blogStore.updateBlog(String(route.params.slug), payload, node);
+}
 
 watch (
     () => route.params.slug, 
-    (slug) => {
-        if (slug) {
-            getBlog(String(slug));
-        }
-    }, 
+    (slug) => blogStore.getBlog(String(slug)), 
     {immediate: true}
 );
 </script>
 
 <template>
-    <div v-if="blog" class="form edit_blog_form">
+    <div v-if="blogStore.blog" class="form edit_blog_form">
         <div class="header">
             <RouterLink to="/blogs">&larr;</RouterLink>
-            <h1>Edit Blog: {{ blog.title }}</h1>
+            <h1>Edit Blog: {{ blogStore.blog.title }}</h1>
         </div>
 
         <div class="form-wrapper">
-            <FormKit type="form" @submit="updateBlog" submit-label="Update">
+            <FormKit type="form" @submit="handleUpdate" submit-label="Update">
                 <div class="inputs-group">
-                    <FormKit type="text" label="Title" name="title" :value="blog.title" />
+                    <FormKit type="text" label="Title" name="title" :value="blogStore.blog.title" />
                 </div>
                 <div class="inputs-group">
-                    <FormKit type="textarea" label="Body" name="body" :value="blog.body" />
+                    <FormKit type="textarea" label="Body" name="body" :value="blogStore.blog.body" />
                 </div>
             </FormKit>
         </div>
