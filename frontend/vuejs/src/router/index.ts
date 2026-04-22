@@ -6,6 +6,7 @@ import LoginView from '../views/auth/Login.vue';
 import DashboardView from '../views/Dashboard.vue';
 import BlogsView from '../views/pages/blogs/Index.vue';
 import CreateBlogView from '../views/pages/blogs/Create.vue';
+import ViewBlog from '../views/pages/blogs/Show.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,12 @@ const router = createRouter({
       path: '/blogs/create',
       name: 'CreateBlog',
       component: CreateBlogView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/blogs/:id',
+      name: 'ViewBlog',
+      component: ViewBlog,
       meta: { requiresAuth: true },
     },
     {

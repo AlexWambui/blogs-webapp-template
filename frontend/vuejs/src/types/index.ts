@@ -15,3 +15,18 @@ export interface User {
     name: string;
     email: string;
 }
+
+export type Blog = {
+    id: number;
+    title: string;
+    slug: string;
+    body: string;
+    is_published: boolean;
+    created_at: string;
+};
+
+export type BlogData = {
+    data: Blog[];
+    links: any;
+    meta: any;
+};

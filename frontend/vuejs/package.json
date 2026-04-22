@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@formkit/vue": "^2.0.0",
+    "@heroicons/vue": "^2.2.0",
     "@tailwindcss/vite": "^4.2.2",
     "axios": "^1.15.0",
     "laravel-vue-pagination": "^4.1.3",

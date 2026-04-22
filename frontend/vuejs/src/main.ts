@@ -14,10 +14,11 @@ import config from '../formkit.config.ts'
 
 const app = createApp(App)
 const pinia = createPinia()
+
 pinia.use(piniaPluginPersistedState)
 app.use(pinia)
 app.use(router)
 app.use(plugin, defaultConfig(config))
 app.use(ToastPlugin)
 
-app.mount('#app');
+app.mount('#app')
