@@ -26,7 +26,7 @@ export const useBlogStore = defineStore("blog", () => {
         isLoading.value = true;
         try {
             const { data } = await axiosInstance.get(`/blogs?page=${page}`);
-            blogsCollection.value = await data;
+            blogsCollection.value = data;
         } catch (e) {
             console.error(e);
         } finally {
