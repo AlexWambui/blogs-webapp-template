@@ -17,7 +17,8 @@
                 @apply text-(--faint-text-light);
             }
 
-            input {
+            input,
+            textarea {
                 @apply text-(--text-color-dark) w-full border border-(--faint-border-light) py-1 px-4 rounded-[4px];
             }
         }

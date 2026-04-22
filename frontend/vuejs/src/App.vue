@@ -9,6 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
                 <div class="flex gap-4">
                     <RouterLink to="/" class="text-slate-200">Home</RouterLink>
                     <RouterLink to="/dashboard" class="text-slate-200">Dashboard</RouterLink>
+                    <RouterLink to="/blogs" class="text-slate-200">Blogs</RouterLink>
                 </div>
                 <div class="flex gap-4">
                     <RouterLink to="/login" class="text-slate-200">Login</RouterLink>
