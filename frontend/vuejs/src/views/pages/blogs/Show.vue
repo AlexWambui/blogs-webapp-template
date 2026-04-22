@@ -7,9 +7,9 @@ import type { Blog } from '@/types';
 const route = useRoute();
 const blog = ref<Blog | null>(null);
 
-const getBlog = async (id: string | string[]) => {
+const getBlog = async (slug: string) => {
     try {
-        const { data } = await axiosInstance.get(`/blogs/${id}`);
+        const { data } = await axiosInstance.get(`/blogs/${slug}`);
         blog.value = data.data;
     } catch (e) {
         console.error(e);
@@ -17,10 +17,10 @@ const getBlog = async (id: string | string[]) => {
 };
 
 watch (
-    () => route.params.id, 
-    (id) => {
-        if (id) {
-            getBlog(id);
+    () => route.params.slug, 
+    (slug) => {
+        if (slug) {
+            getBlog(String(slug));
         }
     }, 
     {immediate: true}

@@ -59,7 +59,16 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $validated_data = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'body' => ['required', 'string']
+        ]);
+
+        $validated_data['slug'] = Str::slug($validated_data['title']);
+
+        $blog->update($validated_data);
+
+        return new BlogResource($blog);
     }
 
     /**

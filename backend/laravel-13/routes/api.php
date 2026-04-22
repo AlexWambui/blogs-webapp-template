@@ -10,13 +10,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('blogs', BlogController::class)->except(['create', 'edit']);
+    Route::get('/blogs', [BlogController::class, 'index']);
+    Route::post('/blogs', [BlogController::class, 'store']);
+    Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
+    Route::put('/blogs/{blog:slug}', [BlogController::class, 'update']);
+    Route::patch('/blogs/{blog:slug}', [BlogController::class, 'update']);
+    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy']);
 });
 
-Route::get('users', function (Request $request) {
+Route::get('users', function () {
     return User::all();
 });
 
-Route::get('/403', function (Request $request) {
+Route::get('/403', function () {
     return response()->json('unauthorized', 403);
 });

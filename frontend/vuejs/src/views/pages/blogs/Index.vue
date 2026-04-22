@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { TailwindPagination } from 'laravel-vue-pagination';
-import { EyeIcon } from '@heroicons/vue/24/solid';
+import { EyeIcon, PencilIcon } from '@heroicons/vue/24/solid';
 import axiosInstance from '@/lib/axios';
 import type { BlogData } from '@/types';
 
@@ -51,9 +51,15 @@ onMounted(async () => {
                         <td>{{ blog.is_published ? 'Published' : 'Draft' }}</td>
                         <td>{{ blog.created_at }}</td>
                         <td class="tbody-actions">
-                            <RouterLink :to="{ name: 'ViewBlog', params: {id: blog.id} }">
-                                <EyeIcon class="w-5 h-5" />
-                            </RouterLink>
+                            <div class="actions">
+                                <RouterLink :to="{ name: 'ViewBlog', params: {slug: blog.slug} }">
+                                    <EyeIcon class="w-5 h-5" />
+                                </RouterLink>
+
+                                <RouterLink :to="{ name: 'EditBlog', params: {slug: blog.slug} }">
+                                    <PencilIcon class="w-5 h-5" />
+                                </RouterLink>
+                            </div>
                         </td>
                     </tr>
                 </template>

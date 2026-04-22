@@ -7,6 +7,7 @@ import DashboardView from '../views/Dashboard.vue';
 import BlogsView from '../views/pages/blogs/Index.vue';
 import CreateBlogView from '../views/pages/blogs/Create.vue';
 import ViewBlog from '../views/pages/blogs/Show.vue';
+import EditBlog from '../views/pages/blogs/Edit.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,9 +48,15 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/blogs/:id',
+      path: '/blogs/:slug',
       name: 'ViewBlog',
       component: ViewBlog,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/blogs/:slug/edit',
+      name: 'EditBlog',
+      component: EditBlog,
       meta: { requiresAuth: true },
     },
     {
