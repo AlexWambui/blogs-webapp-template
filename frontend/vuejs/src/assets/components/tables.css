@@ -1,17 +1,15 @@
 .table-wrapper {
-    @apply bg-white dark:bg-gray-900 rounded-lg border shadow-sm overflow-hidden;
+    @apply overflow-x-auto bg-(--component-bg-color) rounded-sm border border-(--faint-border) shadow-sm;
 
     table {
-        @apply w-full;
-        border-spacing: 0;
-        border-collapse: collapse;
+        @apply w-full border-collapse border-spacing-0;
 
         thead {
             tr {
                 @apply bg-gray-50 dark:bg-gray-800;
 
                 th {
-                    @apply text-left;
+                    @apply py-0.75 px-1 font-medium text-sm tracking-wide text-left border-b border-(--faint-border);
                 }
 
                 .thead-actions {
@@ -22,38 +20,27 @@
 
         tbody {
             tr {
-                .image-column {
-                    @apply flex items-center gap-3;
-
-                    .image {
-                        @apply w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden;
-
-                        img {
-                            @apply w-full h-full object-cover;
-                        }
-                    }
+                td {
+                    @apply py-0.75 px-1 text-(--faint-text) border-b border-(--faint-border);
                 }
 
                 .tbody-actions {
-                    @apply text-center;
-
                     .actions {
-                        @apply flex justify-center space-x-2;
-
-                        .action {
-                            @apply text-blue-600 hover:text-blue-800 dark:text-gray-300;
-                        }
-
-                        .edit {
-                            @apply dark:text-blue-600;
-                        }
-
-                        .delete {
-                            @apply text-red-600 hover:text-red-800 dark:text-red-500;
-                        }
+                        @apply flex gap-2 items-center justify-center;
                     }
                 }
             }
+        }
+    }
+}
+
+.table-header {
+    @apply flex justify-between mb-4;
+
+    .action-btn {
+        button,
+        a {
+            @apply py-2 px-4 bg-(--component-bg-color) text-(--text-color) font-medium rounded-sm;
         }
     }
 }

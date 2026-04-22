@@ -1,67 +1,26 @@
-<template>
-    <div v-if="lastPage > 1" class="pagination">
-        <button 
-            @click="goToPage(1)"
-            :disabled="currentPage === 1"
-            class="px-3 py-1 rounded border"
-        >
-            &lt;&lt;
-        </button>
-
-        <button 
-            @click="goToPage(currentPage - 1)"
-            :disabled="currentPage === 1"
-            class="px-3 py-1 rounded border"
-        >
-            &lt;
-        </button>
-
-        <button 
-            v-for="pageNum in visiblePages" 
-            :key="pageNum"
-            @click="goToPage(pageNum)"
-            :class="['px-3 py-1 rounded border', currentPage === pageNum ? 'active-page' : 'inactive-page']"
-        >
-            {{ pageNum }}
-        </button>
-
-        <button 
-            @click="goToPage(currentPage + 1)"
-            :disabled="currentPage === lastPage"
-            class="px-3 py-1 rounded border"
-        >
-            &gt;
-        </button>
-
-        <button 
-            @click="goToPage(lastPage)"
-            :disabled="currentPage === lastPage"
-            class="px-3 py-1 rounded border"
-        >
-            &gt;&gt;
-        </button>
-    </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps<{
-    currentPage: number;
-    lastPage: number;
+    data: {
+        current_page: number;
+        last_page: number;
+    };
     maxVisible?: number;
 }>();
 
 const emit = defineEmits<{
-    (e: 'update:page', page: number): void;
+    (e: 'pagination-change-page', page: number): void;
 }>();
 
+const currentPage = computed(() => props.data.current_page);
+const lastPage = computed(() => props.data.last_page);
 const maxVisible = computed(() => props.maxVisible || 5);
 
 const visiblePages = computed(() => {
     const pages: number[] = [];
-    let start = Math.max(1, props.currentPage - Math.floor(maxVisible.value / 2));
-    let end = Math.min(props.lastPage, start + maxVisible.value - 1);
+    let start = Math.max(1, currentPage.value - Math.floor(maxVisible.value / 2));
+    let end = Math.min(lastPage.value, start + maxVisible.value - 1);
     
     if (end - start + 1 < maxVisible.value) {
         start = Math.max(1, end - maxVisible.value + 1);
@@ -73,13 +32,52 @@ const visiblePages = computed(() => {
     
     return pages;
 });
-
-const goToPage = (page: number) => {
-    if (page !== props.currentPage && page >= 1 && page <= props.lastPage) {
-        emit('update:page', page);
-    }
-};
 </script>
+
+<template>
+    <div v-if="lastPage > 1" class="pagination">
+        <button 
+            @click="$emit('pagination-change-page', 1)"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 rounded border"
+        >
+            &lt;&lt;
+        </button>
+
+        <button 
+            @click="$emit('pagination-change-page', currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 rounded border"
+        >
+            &lt;
+        </button>
+
+        <button 
+            v-for="pageNum in visiblePages" 
+            :key="pageNum"
+            @click="$emit('pagination-change-page', pageNum)"
+            :class="['px-3 py-1 rounded border', currentPage === pageNum ? 'active-page' : 'inactive-page']"
+        >
+            {{ pageNum }}
+        </button>
+
+        <button 
+            @click="$emit('pagination-change-page', currentPage + 1)"
+            :disabled="currentPage === lastPage"
+            class="px-3 py-1 rounded border"
+        >
+            &gt;
+        </button>
+
+        <button 
+            @click="$emit('pagination-change-page', lastPage)"
+            :disabled="currentPage === lastPage"
+            class="px-3 py-1 rounded border"
+        >
+            &gt;&gt;
+        </button>
+    </div>
+</template>
 
 <style scoped>
 .pagination {
@@ -107,21 +105,18 @@ const goToPage = (page: number) => {
     cursor: not-allowed;
 }
 
-/* Active page - light green */
 .active-page {
-    background-color: #00ff5e !important;
+    background-color: #22c55e !important;
     border-color: #22c55e !important;
-    color: #025c23 !important;
+    color: white !important;
 }
 
-/* Inactive page */
 .inactive-page {
     background-color: #e5e7eb;
     border-color: #e5e7eb;
     color: #374151;
 }
 
-/* Dark mode */
 @media (prefers-color-scheme: dark) {
     .pagination button {
         background: #1f2937;

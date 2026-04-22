@@ -2,7 +2,11 @@
     @apply p-4;
 
     .header {
-        @apply border-b border-(--faint-border-light) mb-4 py-4;
+        @apply flex items-center gap-2 border-b border-(--faint-border) mb-4 py-4;
+
+        a {
+            @apply text-gray-100 font-bold text-lg;
+        }
 
         h1 {
             @apply font-semibold text-xl;
@@ -14,17 +18,17 @@
             @apply mb-4;
 
             label {
-                @apply text-(--faint-text-light);
+                @apply text-(--faint-text);
             }
 
             input,
             textarea {
-                @apply text-(--text-color-dark) w-full border border-(--faint-border-light) py-1 px-4 rounded-[4px];
+                @apply text-(--text-color) w-full border border-(--faint-border) py-1 px-4 rounded-[4px];
             }
         }
 
         button {
-            @apply py-1 px-4 bg-(--bg-color-light) text-(--text-color-light) tracking-wider font-medium rounded-[4px];
+            @apply py-1 px-4 bg-(--bg-color) text-(--text-color) tracking-wider font-medium rounded-[4px];
         }
     }
 }

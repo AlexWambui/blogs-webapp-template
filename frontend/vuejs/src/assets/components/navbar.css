@@ -1,0 +1,15 @@
+.top-navbar {
+    @apply py-4 px-4 lg:px-16 bg-(--component-bg-color) sticky top-0 z-100;
+
+    .container {
+        @apply mx-auto flex items-center justify-between;
+
+        .nav-section {
+            @apply flex gap-4;
+
+            a {
+                @apply text-gray-100 font-medium;
+            }
+        }
+    }
+}
